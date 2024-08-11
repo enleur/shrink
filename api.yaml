@@ -1,0 +1,41 @@
+openapi: 3.0.0
+info:
+  title: Shrink API
+  version: 1.0.0
+paths:
+  /shorten:
+    post:
+      summary: Shorten a URL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+      responses:
+        '200':
+          description: Shortened URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shortUrl:
+                    type: string
+  /{shortCode}:
+    get:
+      summary: Redirect to original URL
+      parameters:
+        - name: shortCode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Redirect to original URL
+        '404':
+          description: Short URL not found
