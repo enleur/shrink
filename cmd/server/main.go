@@ -28,7 +28,7 @@ func main() {
 	if os.Getenv("GIN_MODE") == "release" {
 		logger = zap.Must(zap.NewProduction())
 	}
-	defer logger.Sync()
+	defer logger.Sync() //nolint:errcheck
 
 	redis, err := storage.NewRedisStore(conf.Redis.Address, conf.Redis.DB)
 	if err != nil {
@@ -66,9 +66,6 @@ func main() {
 	if err := srv.Shutdown(ctx); err != nil {
 		logger.Fatal("Server Shutdown", zap.Error(err))
 	}
-	select {
-	case <-ctx.Done():
-		logger.Info("timeout of 5 seconds.")
-	}
+	<-ctx.Done()
 	logger.Info("Server exiting")
 }
