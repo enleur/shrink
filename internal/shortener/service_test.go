@@ -2,10 +2,10 @@ package shortener
 
 import (
 	"context"
-	"github.com/enleur/shrink/tests"
 	"testing"
 
 	"github.com/enleur/shrink/internal/storage"
+	"github.com/enleur/shrink/tests"
 	"github.com/stretchr/testify/assert"
 )
 
