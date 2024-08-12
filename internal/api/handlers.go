@@ -3,9 +3,9 @@ package api
 import (
 	"net/http"
 
+	"github.com/enleur/shrink/internal/shortener"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"shrink/internal/shortener"
 )
 
 type Server struct {

@@ -1,4 +1,4 @@
-module shrink
+module github.com/enleur/shrink
 
 go 1.22
 
