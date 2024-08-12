@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/redis/go-redis/extra/redisotel/v9"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -18,6 +19,10 @@ func NewRedisStore(addr string, db int) (*RedisStore, error) {
 		Addr: addr,
 		DB:   db,
 	})
+
+	if err := redisotel.InstrumentTracing(client); err != nil {
+		return nil, err
+	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()

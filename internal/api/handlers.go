@@ -29,7 +29,7 @@ func (s *Server) PostShorten(ctx *gin.Context) {
 		return
 	}
 
-	url, err := s.short.ShortenURL(ctx, *req.Url)
+	url, err := s.short.ShortenURL(ctx.Request.Context(), *req.Url)
 	if err != nil {
 		var invalidURLErr shortener.InvalidURLError
 		if errors.As(err, &invalidURLErr) {
@@ -46,7 +46,7 @@ func (s *Server) PostShorten(ctx *gin.Context) {
 }
 
 func (s *Server) GetShortCode(ctx *gin.Context, shortCode string) {
-	url, err := s.short.GetLongURL(ctx, shortCode)
+	url, err := s.short.GetLongURL(ctx.Request.Context(), shortCode)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{})
 		return

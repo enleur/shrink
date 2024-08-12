@@ -7,6 +7,9 @@ import (
 	"fmt"
 	"net/url"
 	"time"
+
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/trace"
 )
 
 type Store interface {
@@ -20,14 +23,21 @@ type Shortener interface {
 }
 
 type Service struct {
-	store Store
+	store  Store
+	tracer trace.Tracer
 }
 
 func NewService(store Store) *Service {
-	return &Service{store: store}
+	return &Service{
+		store:  store,
+		tracer: otel.Tracer("shrink-service"),
+	}
 }
 
 func (s *Service) ShortenURL(ctx context.Context, longURL string) (string, error) {
+	ctx, span := s.tracer.Start(ctx, "ShortenURL")
+	defer span.End()
+
 	parsedURL, err := url.Parse(longURL)
 	if err != nil {
 		return "", InvalidURLError{Reason: err.Error()}
@@ -50,6 +60,9 @@ func (s *Service) ShortenURL(ctx context.Context, longURL string) (string, error
 }
 
 func (s *Service) GetLongURL(ctx context.Context, shortCode string) (string, error) {
+	ctx, span := s.tracer.Start(ctx, "GetLongURL")
+	defer span.End()
+
 	longURL, err := s.store.Get(ctx, shortCode)
 	if err != nil {
 		return "", fmt.Errorf("failed to retrieve long URL: %w", err)
