@@ -1,3 +1,7 @@
+run:
+  concurrency: 4
+  timeout: 10m
+
 linters:
   enable:
     - gofmt
