@@ -1,6 +1,7 @@
 package api
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/enleur/shrink/internal/shortener"
@@ -10,10 +11,10 @@ import (
 
 type Server struct {
 	logger *zap.Logger
-	short  *shortener.Service
+	short  shortener.Shortener
 }
 
-func NewServer(logger *zap.Logger, short *shortener.Service) *Server {
+func NewServer(logger *zap.Logger, short shortener.Shortener) *Server {
 	return &Server{
 		logger: logger,
 		short:  short,
@@ -30,8 +31,13 @@ func (s *Server) PostShorten(ctx *gin.Context) {
 
 	url, err := s.short.ShortenURL(ctx, *req.Url)
 	if err != nil {
-		s.logger.Error("failed to shorten url", zap.Error(err))
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		var invalidURLErr shortener.InvalidURLError
+		if errors.As(err, &invalidURLErr) {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		} else {
+			s.logger.Error("Failed to shorten URL", zap.Error(err))
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
+		}
 		return
 	}
 

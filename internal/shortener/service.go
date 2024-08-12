@@ -5,12 +5,18 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
+	"net/url"
 	"time"
 )
 
 type Store interface {
 	Set(ctx context.Context, key, value string, expiration time.Duration) error
 	Get(ctx context.Context, key string) (string, error)
+}
+
+type Shortener interface {
+	ShortenURL(ctx context.Context, longURL string) (string, error)
+	GetLongURL(ctx context.Context, shortCode string) (string, error)
 }
 
 type Service struct {
@@ -22,6 +28,14 @@ func NewService(store Store) *Service {
 }
 
 func (s *Service) ShortenURL(ctx context.Context, longURL string) (string, error) {
+	parsedURL, err := url.Parse(longURL)
+	if err != nil {
+		return "", InvalidURLError{Reason: err.Error()}
+	}
+	if parsedURL.Scheme == "" || parsedURL.Host == "" {
+		return "", InvalidURLError{Reason: "missing scheme or host"}
+	}
+
 	shortCode, err := generateShortCode()
 	if err != nil {
 		return "", fmt.Errorf("failed to generate short code: %w", err)
