@@ -7,7 +7,7 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+-rc[0-9]+'
 
 permissions:
-  contents: read
+  contents: write
   packages: write
 
 jobs:
@@ -42,3 +42,13 @@ jobs:
         env:
           TAGS: ${{ steps.meta.outputs.tags }}
         run: ko build cmd/server/main.go --bare --tags $(echo $TAGS | tr ' ' ',')
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generateReleaseNotes: true
+          prerelease: ${{ contains(github.ref, '-rc.') }}
+          skipIfReleaseExists: true
