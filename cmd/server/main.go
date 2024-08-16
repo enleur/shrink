@@ -11,11 +11,13 @@ import (
 	"time"
 
 	"github.com/enleur/shrink/internal/api"
+	"github.com/enleur/shrink/internal/api/middleware"
 	"github.com/enleur/shrink/internal/config"
 	"github.com/enleur/shrink/internal/shortener"
 	"github.com/enleur/shrink/internal/storage"
 	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/sdk/resource"
@@ -114,9 +116,11 @@ func initTracer(conf config.OtelConfig) (*sdktrace.TracerProvider, error) {
 
 func setupRouter(logger *zap.Logger, server *api.Server) *gin.Engine {
 	r := gin.New()
+	r.Use(middleware.PrometheusMiddleware())
 	r.Use(otelgin.Middleware(ServiceName))
 	r.Use(ginzap.Ginzap(logger, time.RFC3339, true))
 	r.Use(ginzap.RecoveryWithZap(logger, true))
+	r.GET(middleware.MetricsPath, gin.WrapH(promhttp.Handler()))
 	api.RegisterHandlers(r, server)
 	return r
 }
