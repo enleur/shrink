@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/caarlos0/env/v11 v11.2.2
-	github.com/gin-contrib/zap v1.1.3
+	github.com/gin-contrib/zap v1.1.4
 	github.com/gin-gonic/gin v1.10.0
 	github.com/oapi-codegen/oapi-codegen/v2 v2.3.1-0.20240802201120-fdf32da8560e
 	github.com/oapi-codegen/runtime v1.1.1
