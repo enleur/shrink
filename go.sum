@@ -226,12 +226,12 @@ github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9de
 github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yusufpapurcu/wmi v1.2.3 h1:E1ctvB7uKFMOJw3fdOW32DwGE9I7t++CRUEMKvFoFiw=
 github.com/yusufpapurcu/wmi v1.2.3/go.mod h1:SBZ9tNy3G9/m5Oi98Zks0QjeHVDvuK0qfxQmPyzfmi0=
-go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.53.0 h1:ktt8061VV/UU5pdPF6AcEFyuPxMizf/vU6eD1l+13LI=
-go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.53.0/go.mod h1:JSRiHPV7E3dbOAP0N6SRPg2nC/cugJnVXRqP018ejtY=
+go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.54.0 h1:lVELs+uHYjuGUsRVMDnd+Ex807eJueosoKKeMTllEiI=
+go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.54.0/go.mod h1:sOFfPdbXztDEfCwBxS8gz9Fre7W/PefVPktTWt9A0TQ=
 go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0 h1:jq9TW8u3so/bN+JPT166wjOI6/vQPF6Xe7nMNIltagk=
 go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0/go.mod h1:p8pYQP+m5XfbZm9fxtSKAbM6oIllS7s2AfxrChvc7iw=
-go.opentelemetry.io/contrib/propagators/b3 v1.28.0 h1:XR6CFQrQ/ttAYmTBX2loUEFGdk1h17pxYI8828dk/1Y=
-go.opentelemetry.io/contrib/propagators/b3 v1.28.0/go.mod h1:DWRkzJONLquRz7OJPh2rRbZ7MugQj62rk7g6HRnEqh0=
+go.opentelemetry.io/contrib/propagators/b3 v1.29.0 h1:hNjyoRsAACnhoOLWupItUjABzeYmX3GTTZLzwJluJlk=
+go.opentelemetry.io/contrib/propagators/b3 v1.29.0/go.mod h1:E76MTitU1Niwo5NSN+mVxkyLu4h4h7Dp/yh38F2WuIU=
 go.opentelemetry.io/otel v1.29.0 h1:PdomN/Al4q/lN6iBJEN3AwPvUiHPMlt93c8bqTG5Llw=
 go.opentelemetry.io/otel v1.29.0/go.mod h1:N/WtXPs1CNCUEx+Agz5uouwCba+i+bJGFicT8SR4NP8=
 go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.29.0 h1:dIIDULZJpgdiHz5tXrTgKIMLkus6jEFa7x5SOKcyR7E=
